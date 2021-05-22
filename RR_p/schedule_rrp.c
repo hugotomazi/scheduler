@@ -16,8 +16,7 @@ void add(char *name, int priority, int burst) {
     newTask->tid = ++contTid;
     newTask->priority = priority;
     newTask->burst = burst;
-    insert(lista, newTask);
-
+    insertOnEnd(lista, newTask);
 }
 
 void schedule() {

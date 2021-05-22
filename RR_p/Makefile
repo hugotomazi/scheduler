@@ -15,7 +15,7 @@ rr: driver.o list.o CPU.o schedule_rr.o
 	$(CC) $(CFLAGS) -o rr driver.o schedule_rr.o list.o CPU.o
 
 priority_rr: driver.o list.o CPU.o schedule_rrp.o
-	$(CC) $(CFLAGS) -o priority_rr driver.o schedule_priority_rr.o list.o CPU.o
+	$(CC) $(CFLAGS) -o priority_rr driver.o schedule_rrp.o list.o CPU.o
 
 driver.o: driver.c
 	$(CC) $(CFLAGS) -c driver.c
