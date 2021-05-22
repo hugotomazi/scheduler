@@ -32,10 +32,9 @@ void schedule() {
         if(atual->task->burst <= 0) {
             delete(lista, atual->task);
         } else {
-            delete(lista, atual->task);
             insertOnEnd(lista, atual->task);
+            delete(lista, atual->task);
         }
         atual = atual->next;
     }
-
 }
