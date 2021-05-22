@@ -24,13 +24,17 @@ void add(char *name, int priority, int burst) {
 }
 
 void schedule() {
-    //traverse(*lista);
     struct node *atual = *lista;
 
     while(atual != NULL) {
-        run(atual->task, 30);
-        delete(lista, atual->task);
-        //insertOnEnd(lista, atual->task);
+        run(atual->task, QUANTUM);
+        atual->task->burst -= QUANTUM;
+        if(atual->task->burst <= 0) {
+            delete(lista, atual->task);
+        } else {
+            delete(lista, atual->task);
+            insertOnEnd(lista, atual->task);
+        }
         atual = atual->next;
     }
 
