@@ -1,6 +1,10 @@
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "schedulers.h"
 #include "list.h"
+#include "CPU.h"
 
 int contTid = 0;
 struct node **lista;
@@ -16,12 +20,18 @@ void add(char *name, int priority, int burst) {
     newTask->tid = ++contTid;
     newTask->priority = priority;
     newTask->burst = burst;
-    insert(lista, newTask);
-
+    insertOnEnd(lista, newTask);
 }
 
 void schedule() {
-    
-    traverse(*lista);
+    //traverse(*lista);
+    struct node *atual = *lista;
+
+    while(atual != NULL) {
+        run(atual->task, 50);
+        delete(lista, atual->task);
+        //insertOnEnd(lista, atual->task);
+        atual = atual->next;
+    }
 
 }

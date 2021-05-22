@@ -28,13 +28,13 @@ void insertOnEnd(struct node **head, Task *newTask) {
     if(*head == NULL) {
         *head = newNode;
     } else {
-        struct node *prev = head;
+        struct node *prev = *head;
         struct node *temp = prev->next;
         while(temp != NULL) {
             prev = temp;
             temp = temp->next;
         }
-        temp->next = newNode;
+        prev->next = newNode;
     }
 }
 
