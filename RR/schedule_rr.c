@@ -28,7 +28,7 @@ void schedule() {
     struct node *atual = *lista;
 
     while(atual != NULL) {
-        run(atual->task, 50);
+        run(atual->task, 30);
         delete(lista, atual->task);
         //insertOnEnd(lista, atual->task);
         atual = atual->next;
