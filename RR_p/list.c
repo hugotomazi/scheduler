@@ -20,6 +20,7 @@ void insert(struct node **head, Task *newTask) {
     *head = newNode;
 }
 
+// add a new task on end of the list
 void insertOnEnd(struct node **head, Task *newTask) {
     struct node *newNode = malloc(sizeof(struct node));
     
