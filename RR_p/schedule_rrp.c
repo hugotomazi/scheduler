@@ -8,6 +8,10 @@
 int contTid = 0;
 struct node **filas[5];
 
+void allocTask(Task *task) {
+    insertOnEnd(filas[task->priority-1], task);
+}
+
 void add(char *name, int priority, int burst) {
     if(contTid == 0) {
         for(int i = 0; i < 5; ++i) {
@@ -22,23 +26,33 @@ void add(char *name, int priority, int burst) {
     newTask->tid = ++contTid;
     newTask->priority = priority;
     newTask->burst = burst;
-    insertOnEnd(filas[newTask->priority - 1], newTask);
+    allocTask(newTask);
+}
+
+Task * getNextTask() {
+    Task *next = NULL;
+    
+    for(int i = 4; i >= 0; --i) {
+        if(*filas[i] != NULL) {
+            next = (*filas[i])->task;
+            break;
+        }
+    }
+    return next;
 }
 
 void schedule() {
-    for(int i = 4; i >= 0; --i) {
-        //traverse(*filas[i]);
-        struct node *atual = *filas[i];
-        while(atual != NULL) {
-            run(atual->task, QUANTUM);
-            atual->task->burst -= QUANTUM;
-            if(atual->task->burst <= 0) {
-                delete(filas[i], atual->task);
-            } else {
-                insertOnEnd(filas[i], atual->task);
-                delete(filas[i], atual->task);
-            }
-            atual = atual->next;
+    Task *atual;
+    while( (atual = getNextTask()) ) {
+        run(atual, QUANTUM);
+        atual->burst -= QUANTUM;
+
+        if(atual->burst <= 0) {
+            delete(filas[atual->priority - 1], atual);
+            continue;
         }
+
+        allocTask(atual);
+        delete(filas[atual->priority-1], atual);
     }
 }
